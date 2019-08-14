@@ -43,10 +43,12 @@ function add(scheme) {
   return db("schemes").insert(scheme);
 }
 
-function update(changes, id) {
-  return db("schemes")
+async function update(changes, id) {
+  await db("schemes")
     .where({ id })
     .update(changes);
+
+  return find();
 }
 
 async function remove(id) {
