@@ -3,7 +3,10 @@ const db = require("../data/db.config");
 module.exports = {
   find,
   findById,
-  findSteps
+  findSteps,
+  add,
+  update,
+  remove
 };
 
 function find() {
@@ -11,7 +14,9 @@ function find() {
 }
 
 function findById(id) {
-  return db("schemes").where({ id });
+  return db("schemes")
+    .where({ id })
+    .first();
 }
 
 function findSteps(id) {
@@ -30,4 +35,24 @@ order by step_number
     .join("steps", "steps.scheme_id", "=", "schemes.id")
     .where({ "schemes.id": id })
     .orderBy("step_number");
+}
+
+function add(scheme) {
+  // ADDS, BUT HOW TO RESOLVE TO THAT SCHEME WITH ID ??
+
+  return db("schemes").insert(scheme);
+}
+
+function update(changes, id) {
+  return db("schemes")
+    .where({ id })
+    .update(changes);
+}
+
+async function remove(id) {
+  await db("schemes")
+    .delete()
+    .where({ "schemes.id": id });
+
+  return find();
 }
