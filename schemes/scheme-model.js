@@ -20,27 +20,17 @@ function findById(id) {
 }
 
 function findSteps(id) {
-  /*
-select schemes.scheme_name, steps.step_number, steps.instructions
-from schemes
-join steps on steps.scheme_id = schemes.id
-where schemes.id = 2
-order by step_number
-*/
-
-  // WHY IS THIS RETURNING SCHEME_ID ???
-
   return db("schemes.scheme_name", "steps.step_number", "steps.instructions")
     .from("schemes")
     .join("steps", "steps.scheme_id", "=", "schemes.id")
     .where({ "schemes.id": id })
     .orderBy("step_number");
+  // why is this returning scheme_id??
 }
 
 function add(scheme) {
-  // ADDS, BUT HOW TO RESOLVE TO THAT SCHEME WITH ID ??
-
   return db("schemes").insert(scheme);
+  // how to resolve to new scheme??
 }
 
 async function update(changes, id) {
